@@ -1,9 +1,10 @@
 from typing import Optional
 
-from pydantic_settings import BaseSettings
+# from pydantic_settings import BaseSettings
+from pydantic import BaseModel
 
 
-class Settings(BaseSettings):
+class Settings(BaseModel):
     # Uvicorn (API)
     HOST: str = "0.0.0.0"
     PORT: int = 5000
