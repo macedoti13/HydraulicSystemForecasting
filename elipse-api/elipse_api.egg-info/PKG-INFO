@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: elipse_api
+Version: 1.0
+Home-page: https://github.com/macedoti13/HydraulicSystemForecasting
+Author: Elipse - PUCRS
+Author-email: p.pagnussat@edu.pucrs.br
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
