@@ -67,12 +67,13 @@ def read_one(table_name: str, condition: dict[str, Any]) -> dict[str, Any]:
         table = Table(table_name, metadata, autoload_with=engine)
         query = table.select().where(table.columns[condition["column"]] == condition["value"])
         result = session.execute(query).fetchone()
-        # parse result to dict
 
     except SQLAlchemyError as e:
+        print(e)
         session.rollback()
         raise HTTPException(status_code=500, detail=str("Error reading data: internal server error"))
     except Exception as e:
+        print(e)
         session.rollback()
         raise HTTPException(status_code=500, detail=str("Error reading data: internal server error"))
 
@@ -85,7 +86,7 @@ def read_one(table_name: str, condition: dict[str, Any]) -> dict[str, Any]:
     return dict(result._mapping)
 
 
-def read_all(table_name: str) -> list[dict[str, Any]]:
+def read_all(table_name: str, limit: int, offset: int) -> list[dict[str, Any]]:
 
     session = Session()
 
@@ -94,7 +95,7 @@ def read_all(table_name: str) -> list[dict[str, Any]]:
 
     try:
         table = Table(table_name, metadata, autoload_with=engine)
-        query = table.select()
+        query = table.select().limit(limit).offset(offset)
         result = session.execute(query).fetchall()
 
     except SQLAlchemyError as e:
@@ -122,6 +123,7 @@ def update_table(data: dict[str, Any], table_name: str, condition: dict[str, Any
 
     try:
         table = Table(table_name, metadata, autoload_with=engine)
+        print(data)
         query = table.update().where(table.columns[condition["column"]] == condition["value"]).values(data)
         session.execute(query)
         session.commit()
@@ -133,9 +135,11 @@ def update_table(data: dict[str, Any], table_name: str, condition: dict[str, Any
         session.rollback()
         raise HTTPException(status_code=422, detail=str("Error updating data: wrong data foramt"))
     except SQLAlchemyError as e:
+        print(e)
         session.rollback()
         raise HTTPException(status_code=500, detail=str("Error updating data: internal server error"))
     except Exception as e:
+        print(e)
         session.rollback()
         raise HTTPException(status_code=500, detail=str("Error updating data: internal server error"))
 

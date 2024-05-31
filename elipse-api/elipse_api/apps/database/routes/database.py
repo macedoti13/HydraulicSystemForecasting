@@ -15,9 +15,9 @@ def write_to_table(
     return db_controller.write_to_table(data, table_name)
 
 
-@router.get("/read_many/{table_name}/")
-def read_many(table_name: str):
-    return db_controller.read_all(table_name)
+@router.get("/read_many/{table_name}")
+def read_many(table_name: str, limit: int = 100, offset: int = 0):
+    return db_controller.read_all(table_name, limit, offset)
 
 
 @router.get("/read_one/{table_name}/{column_name}/{value}")
@@ -30,12 +30,14 @@ def read_one(
     return db_controller.read_one(table_name, condition)
 
 
-@router.put("/update/{table_name}")
+@router.put("/update/{table_name}/{column_name}/{value}")
 def update_one(
     table_name: str,
+    column_name: str,
+    value: Any,
     data: dict[str, Any] = Body({"Name": "John", "Age": 31}),
-    conditions: dict[str, Any] = Body({"Name": "Johnn"}),
 ):
+    conditions = {"column": column_name, "value": value}
     return db_controller.update_table(data, table_name, conditions)
 
 

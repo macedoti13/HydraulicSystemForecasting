@@ -27,6 +27,21 @@ class BronzeElipseData(Base):
             f"reservoir_level_percentage={self.reservoir_level_percentage}, pressure_mca={self.pressure_mca}, "
             f"gmb_1_is_on={self.gmb_1_is_on}, gmb_2_is_on={self.gmb_2_is_on})>"
         )
+    
+class FlowOutLS(Base):
+    __tablename__ = "water_flow_out"
+    timestamp = Column(DateTime, nullable=False, primary_key=True)
+    volume = Column(Float, nullable=False)
+    volume_diff = Column(Float, nullable=True)
+    time_diff = Column(Float, nullable=True)
+    flow_out_l_s = Column(Float, nullable=True)
+
+    def __repr__(self):
+        return (
+            f"<FlowOutLS(timestamp={self.timestamp}, volume={self.volume}, "
+            f"volume_diff={self.volume_diff}, time_diff={self.time_diff}, "
+            f"flow_out_l_s={self.flow_out_l_s})>"
+        ) 
 
 
 # Define the climate_bronze table schema
