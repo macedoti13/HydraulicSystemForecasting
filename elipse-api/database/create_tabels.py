@@ -76,42 +76,42 @@ class ClimateBronze(Base):
         )
 
 
-# # Define the silver_merge table schema
-# class SilverMerge(Base):
-#     __tablename__ = "silver_merge"
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     timestamp = Column(DateTime, nullable=False, unique=True)
-#     flow_in_l_s = Column(Float, nullable=False)
-#     reservoir_level_percentage = Column(Float, nullable=False)
-#     pressure_mca = Column(Float, nullable=False)
-#     gmb_1_is_on = Column(Boolean, nullable=False)
-#     gmb_2_is_on = Column(Boolean, nullable=False)
-#     total_precip_mm = Column(Float)
-#     station_pressure_mb = Column(Float)
-#     max_pressure_last_hour_mb = Column(Float)
-#     min_pressure_last_hour_mb = Column(Float)
-#     max_temp_last_hour_c = Column(Float)
-#     min_temp_last_hour_c = Column(Float)
-#     max_dew_point_last_hour_c = Column(Float)
-#     min_dew_point_last_hour_c = Column(Float)
-#     max_humidity_last_hour_percentage = Column(Float)
-#     min_humidity_last_hour_percentage = Column(Float)
-#     relative_humidity_percentage = Column(Float)
-#     wind_direction_deg = Column(Float)
-#     max_wind_gust_m_s = Column(Float)
-#     wind_speed_m_s = Column(Float)
+# Define the silver_merge table schema
+class SilverMerge(Base):
+    __tablename__ = "silver_merge"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    timestamp = Column(DateTime, nullable=False, unique=True)
+    flow_in_l_s = Column(Float, nullable=False)
+    reservoir_level_percentage = Column(Float, nullable=False)
+    pressure_mca = Column(Float, nullable=False)
+    gmb_1_is_on = Column(Boolean, nullable=False)
+    gmb_2_is_on = Column(Boolean, nullable=False)
+    total_precip_mm = Column(Float)
+    station_pressure_mb = Column(Float)
+    max_pressure_last_hour_mb = Column(Float)
+    min_pressure_last_hour_mb = Column(Float)
+    max_temp_last_hour_c = Column(Float)
+    min_temp_last_hour_c = Column(Float)
+    max_dew_point_last_hour_c = Column(Float)
+    min_dew_point_last_hour_c = Column(Float)
+    max_humidity_last_hour_percentage = Column(Float)
+    min_humidity_last_hour_percentage = Column(Float)
+    relative_humidity_percentage = Column(Float)
+    wind_direction_deg = Column(Float)
+    max_wind_gust_m_s = Column(Float)
+    wind_speed_m_s = Column(Float)
 
-#     def __repr__(self):
-#         return (
-#             f"<SilverMerge(timestamp={self.timestamp}, flow_in_l_s={self.flow_in_l_s}, reservoir_level_percentage={self.reservoir_level_percentage}, "
-#             f"pressure_mca={self.pressure_mca}, gmb_1_is_on={self.gmb_1_is_on}, gmb_2_is_on={self.gmb_2_is_on}, "
-#             f"total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, max_pressure_last_hour_mb={self.max_pressure_last_hour_mb}, "
-#             f"min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
-#             f"max_dew_point_last_hour_c={self.max_dew_point_last_hour_c}, min_dew_point_last_hour_c={self.min_dew_point_last_hour_c}, "
-#             f"max_humidity_last_hour_percentage={self.max_humidity_last_hour_percentage}, min_humidity_last_hour_percentage={self.min_humidity_last_hour_percentage}, "
-#             f"relative_humidity_percentage={self.relative_humidity_percentage}, wind_direction_deg={self.wind_direction_deg}, "
-#             f"max_wind_gust_m_s={self.max_wind_gust_m_s}, wind_speed_m_s={self.wind_speed_m_s})>"
-#         )
+    def __repr__(self):
+        return (
+            f"<SilverMerge(timestamp={self.timestamp}, flow_in_l_s={self.flow_in_l_s}, reservoir_level_percentage={self.reservoir_level_percentage}, "
+            f"pressure_mca={self.pressure_mca}, gmb_1_is_on={self.gmb_1_is_on}, gmb_2_is_on={self.gmb_2_is_on}, "
+            f"total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, max_pressure_last_hour_mb={self.max_pressure_last_hour_mb}, "
+            f"min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
+            f"max_dew_point_last_hour_c={self.max_dew_point_last_hour_c}, min_dew_point_last_hour_c={self.min_dew_point_last_hour_c}, "
+            f"max_humidity_last_hour_percentage={self.max_humidity_last_hour_percentage}, min_humidity_last_hour_percentage={self.min_humidity_last_hour_percentage}, "
+            f"relative_humidity_percentage={self.relative_humidity_percentage}, wind_direction_deg={self.wind_direction_deg}, "
+            f"max_wind_gust_m_s={self.max_wind_gust_m_s}, wind_speed_m_s={self.wind_speed_m_s})>"
+        )
 
 
 # Create the tables
