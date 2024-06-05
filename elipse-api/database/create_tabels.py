@@ -48,6 +48,7 @@ class FlowOutLS(Base):
 class ClimateBronze(Base):
     __tablename__ = "climate_bronze"
     id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(String, nullable=False)
     hour_utc = Column(String, nullable=False)
     total_precip_mm = Column(Float, nullable=True)
     station_pressure_mb = Column(Float, nullable=True)
@@ -66,7 +67,7 @@ class ClimateBronze(Base):
 
     def __repr__(self):
         return (
-            f"<ClimateBronze(total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, "
+            f"<ClimateBronze(date={self.date}, hour_utc={self.hour_utc}, total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, "
             f"max_pressure_last_hour_mb={self.max_pressure_last_hour_mb}, min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, "
             f"max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
             f"max_dew_point_last_hour_c={self.max_dew_point_last_hour_c}, min_dew_point_last_hour_c={self.min_dew_point_last_hour_c}, "
