@@ -44,35 +44,36 @@ class FlowOutLS(Base):
         ) 
 
 
-# Define the climate_bronze table schema
-# class ClimateBronze(Base):
-#     __tablename__ = "climate_bronze"
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     total_precip_mm = Column(Float)
-#     station_pressure_mb = Column(Float)
-#     max_pressure_last_hour_mb = Column(Float)
-#     min_pressure_last_hour_mb = Column(Float)
-#     max_temp_last_hour_c = Column(Float)
-#     min_temp_last_hour_c = Column(Float)
-#     max_dew_point_last_hour_c = Column(Float)
-#     min_dew_point_last_hour_c = Column(Float)
-#     max_humidity_last_hour_percentage = Column(Float)
-#     min_humidity_last_hour_percentage = Column(Float)
-#     relative_humidity_percentage = Column(Float)
-#     wind_direction_deg = Column(Float)
-#     max_wind_gust_m_s = Column(Float)
-#     wind_speed_m_s = Column(Float)
+#Define the climate_bronze table schema
+class ClimateBronze(Base):
+    __tablename__ = "climate_bronze"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    hour_utc = Column(String, nullable=False)
+    total_precip_mm = Column(Float, nullable=True)
+    station_pressure_mb = Column(Float, nullable=True)
+    max_pressure_last_hour_mb = Column(Float, nullable=True)
+    min_pressure_last_hour_mb = Column(Float, nullable=True)
+    max_temp_last_hour_c = Column(Float, nullable=True)
+    min_temp_last_hour_c = Column(Float, nullable=True)
+    max_dew_point_last_hour_c = Column(Float, nullable=True)
+    min_dew_point_last_hour_c = Column(Float, nullable=True)
+    max_humidity_last_hour_percentage = Column(Float, nullable=True)
+    min_humidity_last_hour_percentage = Column(Float, nullable=True)
+    relative_humidity_percentage = Column(Float, nullable=True)
+    wind_direction_deg = Column(Float, nullable=True)
+    max_wind_gust_m_s = Column(Float, nullable=True)
+    wind_speed_m_s = Column(Float, nullable=True)
 
-#     def __repr__(self):
-#         return (
-#             f"<ClimateBronze(total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, "
-#             f"max_pressure_last_hour_mb={self.max_pressure_last_hour_mb}, min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, "
-#             f"max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
-#             f"max_dew_point_last_hour_c={self.max_dew_point_last_hour_c}, min_dew_point_last_hour_c={self.min_dew_point_last_hour_c}, "
-#             f"max_humidity_last_hour_percentage={self.max_humidity_last_hour_percentage}, min_humidity_last_hour_percentage={self.min_humidity_last_hour_percentage}, "
-#             f"relative_humidity_percentage={self.relative_humidity_percentage}, wind_direction_deg={self.wind_direction_deg}, "
-#             f"max_wind_gust_m_s={self.max_wind_gust_m_s}, wind_speed_m_s={self.wind_speed_m_s})>"
-#         )
+    def __repr__(self):
+        return (
+            f"<ClimateBronze(total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, "
+            f"max_pressure_last_hour_mb={self.max_pressure_last_hour_mb}, min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, "
+            f"max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
+            f"max_dew_point_last_hour_c={self.max_dew_point_last_hour_c}, min_dew_point_last_hour_c={self.min_dew_point_last_hour_c}, "
+            f"max_humidity_last_hour_percentage={self.max_humidity_last_hour_percentage}, min_humidity_last_hour_percentage={self.min_humidity_last_hour_percentage}, "
+            f"relative_humidity_percentage={self.relative_humidity_percentage}, wind_direction_deg={self.wind_direction_deg}, "
+            f"max_wind_gust_m_s={self.max_wind_gust_m_s}, wind_speed_m_s={self.wind_speed_m_s})>"
+        )
 
 
 # # Define the silver_merge table schema
