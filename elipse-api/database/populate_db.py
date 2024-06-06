@@ -46,10 +46,10 @@ def populate_climate_bronze():
     
     DATA_PATH_2023 = Path(__file__).parents[2] / "data" / "INMET_S_RS_B807_PORTO ALEGRE- BELEM NOVO_01-01-2023_A_31-12-2023.CSV"
     DATA_PATH_2024 = Path(__file__).parents[2] / "data" / "INMET_S_RS_B807_PORTO ALEGRE- BELEM NOVO_01-01-2024_A_29-02-2024.CSV"
-    DATA_PATH_2024_COMPLEMENTARY = Path(__file__).parents[2] / "data" / "COMPLEMENTARY.CSV"
+    DATA_PATH_2024_COMPLEMENTARY = Path(__file__).parents[2] / "data" / "weather_2024_complementary.CSV"
 
     COLUMN_MAPPING = {
-        'HORA UTC': 'hour_utc',
+        'Hora UTC': 'hour_utc',
         'Data': 'date',
         'PRECIPITAÇÃO TOTAL, HORÁRIO (mm)': 'total_precip_mm',
         'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)': 'station_pressure_mb',
@@ -81,7 +81,8 @@ def populate_climate_bronze():
     df_24.rename(columns=COLUMN_MAPPING, inplace=True)
     df_24_extra.rename(columns=COLUMN_MAPPING, inplace=True)
 
-    df_24_extra = df_24_extra.query('1 <= day <= 11 and month == 3')
+    df_24_extra = df_24_extra[pd.to_datetime(df_24_extra['date']).dt.day.between(1, 11) 
+                              & (pd.to_datetime(df_24_extra['date']).dt.month == 3)]
     
     df_concat = pd.concat([df_23, df_24, df_24_extra], axis=0)
 
