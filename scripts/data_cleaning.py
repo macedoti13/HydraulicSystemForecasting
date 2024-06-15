@@ -125,6 +125,7 @@ def fix_problematic_rows(df):
     df = fill_missing_pressure(df)
     df = fix_pump_status(df)
     df = turn_off_pumps(df)
+    df = df.round(2).reset_index().rename(columns={'index': 'id'})
 
     return df
 
