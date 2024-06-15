@@ -107,6 +107,57 @@ def turn_off_pumps(df):
 
     return df
 
+def create_necessary_columns(original_df):
+    """
+    Create additional necessary columns for analysis.
+
+    Parameters
+    ----------
+    original_df : pd.DataFrame
+        The original DataFrame with the raw data.
+
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with additional columns.
+    """
+    df = original_df.copy()
+    df['reservoir_level_liters'] = df['reservoir_level_percentage'] * 1_000_000 / 100
+    df['time_passed_seconds'] = df['timestamp'].diff().dt.total_seconds()
+    df['total_liters_entered'] = df['input_flow_rate'] * df['time_passed_seconds']
+    df['effective_liters_entered'] = df['reservoir_level_liters'].diff()
+    df['total_liters_out'] = df['total_liters_entered'] - df['effective_liters_entered']
+    df['output_flow_rate'] = df['total_liters_out'] / df['time_passed_seconds']
+    df.loc[df['effective_liters_entered'] < 0, 'effective_liters_entered'] = 0
+    df = df.drop(0)
+    
+    return df
+
+def adjust_flow_rates(df):
+    """
+    Adjust input_flow_rate so that total_liters_entered is not less than effective_liters_entered.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame with calculated columns.
+
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with adjusted input_flow_rate.
+    """
+    df = df.copy()
+    problem_rows = df[df['total_liters_entered'] < df['effective_liters_entered']]
+    
+    for index, row in problem_rows.iterrows():
+        df.at[index, 'input_flow_rate'] = df.at[index, 'effective_liters_entered'] / df.at[index, 'time_passed_seconds']
+        df.at[index, 'total_liters_entered'] = df.at[index, 'effective_liters_entered']
+        df.at[index, 'total_liters_out'] = 0
+        df.at[index, 'output_flow_rate'] = 0
+    
+    return df
+
 def fix_problematic_rows(df):
     """
     Apply all data cleaning functions to fix various issues in the dataset.
@@ -125,6 +176,8 @@ def fix_problematic_rows(df):
     df = fill_missing_pressure(df)
     df = fix_pump_status(df)
     df = turn_off_pumps(df)
+    df = create_necessary_columns(df)
+    df = adjust_flow_rates(df)
     df = df.round(2).reset_index().rename(columns={'index': 'id'})
 
     return df
