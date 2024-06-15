@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import pandas as pd
+import numpy as np
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
@@ -38,8 +39,7 @@ def populate_elipse_bronze():
     df = df.to_dict("records")
 
     response = requests.post(url, json=df)
-    print(response.status_code)
-    print(response.json())
+    print(f'Elipse Bronze :: {response.json()} :: {response.status_code}')
 
 def populate_climate_bronze():
     url = os.environ["API_URL"] + "/database/create/climate_bronze"
@@ -85,50 +85,28 @@ def populate_climate_bronze():
                               & (pd.to_datetime(df_24_extra['date']).dt.month == 3)]
     
     df_concat = pd.concat([df_23, df_24, df_24_extra], axis=0)
-
+    df_concat.replace([np.inf, -np.inf], np.nan, inplace=True)
+    df_concat.fillna(0, inplace=True)
     df_concat = df_concat.to_dict("records")
 
     response = requests.post(url, json=df_concat)
-    print(response.status_code)
-    print(response.json())
+    print(f'Climate Bronze :: {response.json()} :: {response.status_code}')
+
 
 
 def populate_silver_merge():
     url = os.environ["API_URL"] + "/database/create/silver_merge"
-    url_climate_bronze = os.environ["API_URL"] + "/database/read_many/climate_bronze?limit=1000000"
-    url_elipse_bronze = os.environ["API_URL"] + "/database/read_many/elipse_bronze?limit=1000000"
+    DATA_PATH = Path(__file__).parents[2] / "data" / "water_consumption_merged.csv"
 
-    climate_bronze = requests.get(url_climate_bronze).json()
-    elipse_bronze = requests.get(url_elipse_bronze).json()
-
-    climate_bronze = pd.DataFrame(climate_bronze)
-    elipse_bronze = pd.DataFrame(elipse_bronze)
-    
-    climate_bronze['hour_utc'] = climate_bronze['hour_utc'].apply(lambda x: datetime.strptime(x, '%H%M %Z')) 
-    climate_bronze['date'] = pd.to_datetime(climate_bronze['date'], format='%Y/%m/%d')
-    climate_bronze['hour'] = climate_bronze['hour_utc'].dt.hour
-    climate_bronze['day'] = climate_bronze['date'].dt.day
-    climate_bronze['month'] = climate_bronze['date'].dt.month
-    climate_bronze['year'] = climate_bronze['date'].dt.year
-    climate_bronze.drop(columns=['date', 'hour_utc'], axis=1, inplace=True)
-
-    elipse_bronze['timestamp'] = pd.to_datetime(elipse_bronze['timestamp'], format='%Y-%m-%d %H:%M:%S')
-    elipse_bronze['hour'] = elipse_bronze['timestamp'].dt.hour
-    elipse_bronze['day'] = elipse_bronze['timestamp'].dt.day
-    elipse_bronze['month'] = elipse_bronze['timestamp'].dt.month
-    elipse_bronze['year'] = elipse_bronze['timestamp'].dt.year
-
-    silver_merge = elipse_bronze.merge(climate_bronze, on=['hour', 'day', 'year', 'month'], how='left') 
-    silver_merge['global_radiation_kj_m2'] = silver_merge['global_radiation_kj_m2'].fillna(0)
-    silver_merge = silver_merge.ffill()
-    silver_merge.drop(columns=['day', 'month', 'hour', 'year'], inplace=True)
+    silver_merge = pd.read_csv(DATA_PATH)
+    silver_merge.drop_duplicates(subset="timestamp", keep="first", inplace=True)
+    silver_merge["timestamp"] = silver_merge["timestamp"].astype(str)
     
     silver_merge = silver_merge.to_dict("records")
     
     response = requests.post(url, json=silver_merge)
-    print(response.status_code)
-    print(response.json())
-    
+    print(f'Silver Merge :: {response.json()} :: {response.status_code}')
+
 if __name__ == "__main__":
     populate_elipse_bronze()
     populate_climate_bronze()

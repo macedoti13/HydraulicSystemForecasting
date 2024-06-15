@@ -91,6 +91,9 @@ class SilverMerge(Base):
     station_pressure_mb = Column(Float)
     max_pressure_last_hour_mb = Column(Float)
     min_pressure_last_hour_mb = Column(Float)
+    global_radiation_kj_m2 = Column(Float)
+    air_temp_c = Column(Float)
+    dew_point_temp_c = Column(Float)
     max_temp_last_hour_c = Column(Float)
     min_temp_last_hour_c = Column(Float)
     max_dew_point_last_hour_c = Column(Float)
@@ -107,7 +110,7 @@ class SilverMerge(Base):
             f"<SilverMerge(timestamp={self.timestamp}, flow_in_l_s={self.flow_in_l_s}, reservoir_level_percentage={self.reservoir_level_percentage}, "
             f"pressure_mca={self.pressure_mca}, gmb_1_is_on={self.gmb_1_is_on}, gmb_2_is_on={self.gmb_2_is_on}, "
             f"total_precip_mm={self.total_precip_mm}, station_pressure_mb={self.station_pressure_mb}, max_pressure_last_hour_mb={self.max_pressure_last_hour_mb}, "
-            f"min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
+            f"min_pressure_last_hour_mb={self.min_pressure_last_hour_mb}, global_radiation_kj_m2={self.global_radiation_kj_m2}, air_temp_c={self.air_temp_c}, dew_point_temp_c={self.dew_point_temp_c},max_temp_last_hour_c={self.max_temp_last_hour_c}, min_temp_last_hour_c={self.min_temp_last_hour_c}, "
             f"max_dew_point_last_hour_c={self.max_dew_point_last_hour_c}, min_dew_point_last_hour_c={self.min_dew_point_last_hour_c}, "
             f"max_humidity_last_hour_percentage={self.max_humidity_last_hour_percentage}, min_humidity_last_hour_percentage={self.min_humidity_last_hour_percentage}, "
             f"relative_humidity_percentage={self.relative_humidity_percentage}, wind_direction_deg={self.wind_direction_deg}, "
