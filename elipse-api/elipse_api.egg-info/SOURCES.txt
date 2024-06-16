@@ -1,0 +1,9 @@
+README.md
+setup.py
+elipse_api/__init__.py
+elipse_api/__main__.py
+elipse_api/settings.py
+elipse_api.egg-info/PKG-INFO
+elipse_api.egg-info/SOURCES.txt
+elipse_api.egg-info/dependency_links.txt
+elipse_api.egg-info/top_level.txt
